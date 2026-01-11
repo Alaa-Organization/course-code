@@ -1,0 +1,21 @@
+# https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows?search-overlay-open=true&search-overlay-input=github-script&search-overlay-ask-ai=true
+
+name: Pull Request Comment
+on:
+  pull_request_target:
+    types: [opened]
+jobs:
+  pr-comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment on New PRs
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: 'Thanks for contributing!'
+            });
