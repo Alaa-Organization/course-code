@@ -1,0 +1,34 @@
+# Note: below options act as AND operator:
+# branches, tags, path must all be valid and be runable.
+# if ex: paths fail, then branches, tags, and paths is an invalid request
+
+name: Push To Branch
+on:
+  push:
+    branches:
+      - main
+      - "feature/*" # does not cascade to features/*/...
+      - "feature/**" # cascades to features/*/xx
+      - "!feature/featA" #except featA..order is important, must come last
+    tags:
+      - v1.* # matches v1.1, v1.1.2
+    paths:
+      - "**.js"
+      - "!app.js"
+  pull_request:
+    types: [opened, assigned, reopened, synchronize]
+    branches:
+      - main
+    paths:
+      - "**.js" # workflow will only run for pull requests that include a change in .js file in the main branch
+  issues:
+    types: [opened]
+
+jobs:
+  checkout-test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
+      - uses: actions/checkout@v3

@@ -5,6 +5,8 @@ on:
   workflow_run:
     workflows: [Repository Events]
     types: [completed]
+    branches:
+      - main # as long as [Repository Events] ran on main branch
 jobs:
   echo-string:
     runs-on: ubuntu-latest
