@@ -1,0 +1,12 @@
+# the workflow is triggered to run based on an external action.
+# Must be pushed to our default main branch.
+
+name: External Events
+on:
+  repository_dispatch:
+
+jobs:
+  echo-a-string:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Repository Dispatch"
