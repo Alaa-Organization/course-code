@@ -10,7 +10,7 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v10.11
+      - uses: actions/stale@v10
         with:
           stale-issue-message: "Comment on staled issues."
           days-before-stale: 1
