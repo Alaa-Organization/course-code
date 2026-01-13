@@ -1,0 +1,17 @@
+# at url https://github.com/actions/stale
+# Marks: issues and pull requests that have not had recent interaction, as stale
+
+name: Stale Issues & Pull Requests
+on:
+  schedule:
+    - cron: "0 14 * * *"
+    - cron: "0/5 * * * *" # just for testing, minimum val
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v10.11
+        with:
+          stale-issue-message: "Comment on staled issues."
+          days-before-stale: 1
+          days-before-close: 5
