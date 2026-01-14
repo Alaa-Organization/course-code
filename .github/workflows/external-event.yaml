@@ -11,4 +11,4 @@ jobs:
   echo-a-string:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.event.client_payload.env }}
+      - run: echo ${{ github.event.client_payload.env }} # evaluate expression with this syntax
