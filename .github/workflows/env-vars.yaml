@@ -29,4 +29,5 @@ jobs:
         run: |
           echo '${{ env.STEP_LEVEL_ENV }}' # evaluated by github actions, not runner machine, ok to use in if-statemtn
           echo $STEP_LEVEL_ENV             # evaluated on runner machine, cannot use in if-statement
+          echo $WF_LEVEL_ENV
           echo $JOB_LEVEL_ENV
