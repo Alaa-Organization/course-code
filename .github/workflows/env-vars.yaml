@@ -1,0 +1,17 @@
+# Same information can be used as environment variables and also as context.
+# Difference:
+#   Environment variable $GITHUB_REF will run on the runner machine
+#   '${{ github.ref }}' will be evaluated by github actions before workflow is sent to the runner machine
+#   ... it is sent to the runner machine already evaluated
+
+name: Environment Variables
+on: [push]
+
+jobs:
+  env-vars-and-context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log ENV VAR
+        run: echo $GITHUB_REF
+      - name: Log COntext
+        run: echo '${{ github.ref }}'
