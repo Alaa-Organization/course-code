@@ -1,4 +1,4 @@
-name: Map Outputs for All Jobs Other to Access
+name: Map Outputs for All Jobs to Access
 on:
   workflow_dispatch:
     inputs:
