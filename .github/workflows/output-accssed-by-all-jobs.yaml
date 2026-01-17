@@ -1,0 +1,41 @@
+name: Map Outputs for All Jobs to Access
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        description: Operating System
+        default: "Windows-latest, ubuntu-latest"
+        type: string
+      node-version:
+        description: Node Version
+        default: "14, 15, 16"
+        type: string
+jobs:
+  prepare-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix-arrays: ${{ steps.matrix-arrays.outputs.result}}
+    steps:
+      - uses: actions/github-script@v6
+        id: matrix-arrays
+        with:
+          script: "return {os: context.payload.inputs['os'].split(','), 'node-version': context.payload.inputs['node-version'].split(',')}"
+          result-encoding: json
+      - run: echo '${{ steps.matrix-arrays.outputs.result}}'
+  #---------------------------------------------------------------
+  # By using the outputs:
+  # matrix-arrays steps will be available to our entire jobs
+  # and can be accessed in the node-matrix job (needs: prepare-matrix)
+  node-matrix:
+    needs: prepare-matrix
+    strategy:
+      matrix:
+        os: ${{ fromJson(needs.prepare-matrix.outputs.matrix-arrays).os }}
+        node-version: ${{ fromJson(needs.prepare-matrix.outputs.matrix-arrays).node-version }}
+    runs-on: ${{ matrix.os }}
+    steps:
+      - run: node -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          architecture: "x64"
