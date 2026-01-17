@@ -18,9 +18,11 @@ on:
 #----------------------------------------------------------------------------
 # but if we make the group name dynamic, then
 # staging/production will run concurrently
+
+# MAKE UNIQUIE with
 #----------------------------------------------------------------------------
 concurrency:
-  group: ${{ github.event.inputs.environment }}
+  group: ${{ github.workflow }}-${{ github.event.inputs.environment }}
   cancel-in-progress: true
 jobs:
   sleep:
