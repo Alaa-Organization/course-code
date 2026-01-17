@@ -1,0 +1,29 @@
+name: Concurrency 1
+run-name: Concurrency 1 (${{ inputs.environment }})
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment"
+        type: environment
+        required: true
+#---------------------------------------------------------------------------
+# even if manually triggered several wf in githib actions
+# the first instance that started will finish, only then
+# will the next instance start executing
+#
+#   group: concurrency-1
+#   cancel-in-progress: true
+# will prevent running in parallel, only 1st will execute, rest will cancel
+#----------------------------------------------------------------------------
+# but if we make the group name dynamic, then
+# staging/production will run concurrently
+#----------------------------------------------------------------------------
+concurrency:
+  group: ${{ github.event.inputs.environment }}
+  cancel-in-progress: true
+jobs:
+  sleep:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 30
