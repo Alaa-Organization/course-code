@@ -1,0 +1,58 @@
+name: Matrix Fail Fast True
+on: [push]
+
+#------------------- ORIGINAL --------------------------
+# X {os: ubuntu-latest, node-version: 14, is-ubuntu: true, experimental: false}
+# {os: ubuntu-latest, node-version: 15, is-ubuntu: true, experimental: false}
+# {os: ubuntu-latest, node-version: 16, is-ubuntu: true, experimental: true}
+# {os: windows-latest, node-version: 14, experimental: false}
+# {os: windows-latest, node-version: 15, experimental: false}
+# {os: windows-latest, node-version: 16, experimental: false}
+
+# {os: macos-latest, node-version: 15}
+# {os: ubuntu-latest, node-version: 17}
+
+#--------------------------------------------------------------------------------
+# fail-fast: true
+#   ..then if any job in matrix fails, in progress pending jobs will cancelled
+# continue-on-error: false
+#   .. our entire workflow will fail if any of our jobs have failed
+#---------------------------------------------------------------------------------
+jobs:
+  node-matrix:
+    continue-on-error: ${{ matrix.experimental == true }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [14, 15, 16]
+        include:
+          - os: ubuntu-latest
+            is-ubuntu: true
+          - os: macos-latest
+            node-version: 15
+          - experimental: false
+          - os: ubuntu-latest
+            node-version: 16
+            experimental: true
+          - os: ubuntu-latest
+            node-version: 17
+        exclude:
+          - os: ubuntu-latest
+            node-version: 14
+      fail-fast: true
+    runs-on: ${{ matrix.os }}
+    steps:
+      - if: matrix.experimental == true
+        run: exit 1
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          architecture: "x64"
+
+      - name: Show Matrix
+        run: echo '${{ toJson(matrix)}}'
+
+      - name: Node Version
+        run: node -v
