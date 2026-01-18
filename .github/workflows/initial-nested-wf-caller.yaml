@@ -14,8 +14,8 @@ jobs:
     uses: Alaa-Organization/workflows/.github/workflows/reusable.yaml@main
     with:
       name: ${{ inputs.name }} # my local inputs
-    secrets: inherit
-
+    secrets:
+      access-token: ${{secrets.ACCESS_TOKEN}}
   calling-a-reusable-wf-in-the-same-repo:
     uses: ./.github/workflows/reusable-wf.yaml
     secrets: inherit
