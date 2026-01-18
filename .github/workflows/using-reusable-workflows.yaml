@@ -1,0 +1,22 @@
+name: Calling Reusable Workflows
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Input description"
+        type: string
+        default: "Keyhan"
+        required: false
+#----------------------------------------------------------------
+# NOTE:
+#  access-token: ${{ secrets.ACCESS_TOKEN }} is for clarity
+#  we can use the single word keyword inherit instead of above
+#----------------------------------------------------------------
+jobs:
+  calling-a-reusable-workflow:
+    # in reality instead of main, we use a specific commit id
+    uses: Alaa-Organization/workflows/.github/workflows/reusable.yaml@main
+    with:
+      name: ${{ inputs.name }} # my local inputs
+    secrets:
+      access-token: ${{ secrets.ACCESS_TOKEN }}
