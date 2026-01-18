@@ -1,4 +1,4 @@
-name: Initial Orchesterator to Nested Reusable Workflows
+name: Origin of Nested Workflows
 on:
   workflow_dispatch:
     inputs:
@@ -7,12 +7,13 @@ on:
         type: string
         default: "Keyhan"
         required: false
+
 jobs:
-  calling-a-reusable-wf-in-the-same-repo:
+  calling-internal-wf:
     uses: ./.github/workflows/reusable-wf.yaml
     secrets: inherit
   using-reusable-wf-output:
     runs-on: ubuntu-latest
-    needs: calling-a-reusable-wf-in-the-same-repo
+    needs: calling-internal-wf
     steps:
-      - run: echo ${{ needs.calling-a-reusable-wf-in-the-same-repo.outputs.date }}
+      - run: echo ${{ needs.calling-internal-wf.outputs.date }}
