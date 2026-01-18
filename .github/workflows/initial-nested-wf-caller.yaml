@@ -1,4 +1,5 @@
 name: Origin of Nested Workflows
+
 on:
   workflow_dispatch:
     inputs:
@@ -12,8 +13,16 @@ jobs:
   calling-internal-wf:
     uses: ./.github/workflows/reusable-wf.yaml
     secrets: inherit
-  using-reusable-wf-output:
-    runs-on: ubuntu-latest
+
+  calling-external-wf:
     needs: calling-internal-wf
+    uses: Alaa-Organization/workflows/.github/workflows/reusable.yaml@main
+    with:
+      name: ${{ inputs.name }}
+    secrets: inherit
+
+  using-reusable-wf-output:
+    needs: calling-internal-wf
+    runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ needs.calling-internal-wf.outputs.date }}
+      - run: echo "Date from internal workflow ${{ needs.calling-internal-wf.outputs.date }}"
