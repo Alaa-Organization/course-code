@@ -1,4 +1,4 @@
-name: Caching and Artifacts
+name: Old way not ci but with Caching and Artifacts
 on: [workflow_dispatch]
 
 jobs:
