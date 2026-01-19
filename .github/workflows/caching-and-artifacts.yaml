@@ -12,6 +12,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const axios ? require('axios')
+            const axios = require('axios')
             const res = await axios('https://icanhazdadjoke.com/', {headers: {Accept: 'text/plain'}})
             console.log(res.data)
