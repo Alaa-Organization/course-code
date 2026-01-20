@@ -1,0 +1,32 @@
+#-------------------------------------------------------------
+# https://hub.docker.com/_/node/
+#-------------------------------------------------------------
+name: Docker Container
+on: [workflow_dispatch]
+
+jobs:
+  docker-job:
+    runs-on: ubuntu-latest
+    container:
+      image: node:25-alpine3.22
+    env:
+      API_URL: some-url.com
+
+    steps:
+      - name: Log Node & OS Versions
+        run: |
+          node -v
+          cat /etc/os-release
+      - name: Log Env
+        run: echo $API_URL
+        # these are sibling containers with original container for all , above
+        # these two will run in host as main container, so they can share info between them
+      - name: Container in a Step
+        uses: docker://node:25-alpine3.22 # if in github (docker://ghcr.io/node:25-alpine3.22)
+        with:
+          entrypoint: node
+          args: -p 2+3
+      - name: Log Node Version
+        uses: docker://node:25-alpine3.22 # if in github (docker://ghcr.io/node:25-alpine3.22)
+        with:
+          args: -v
