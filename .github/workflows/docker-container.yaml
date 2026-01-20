@@ -19,6 +19,8 @@ jobs:
           cat /etc/os-release
       - name: Log Env
         run: echo $API_URL
+      - name: Create a File
+        run: echo 'Some Text' > text.txt
         # these are sibling containers with original container for all , above
         # these two will run in host as main container, so they can share info between them
       - name: Container in a Step
@@ -30,3 +32,8 @@ jobs:
         uses: docker://node:25-alpine3.22 # if in github (docker://ghcr.io/node:25-alpine3.22)
         with:
           args: -v
+      - name: Show File Content
+        uses: docker://node:25-alpine3.22 # if in github (docker://ghcr.io/node:25-alpine3.22)
+        with:
+          entrypoint: cat
+          args: text.txt
