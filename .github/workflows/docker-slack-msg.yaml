@@ -1,0 +1,18 @@
+#--------------------------------------------------------
+# https://hub.docker.com/r/technosophos/slack-notify
+# api.slack.com/apps
+#--------------------------------------------------------
+name: Docker Slack Message
+on: [workflow_dispatch]
+
+jobs:
+  slack-notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send a Slack Message
+        uses: docker://technosophos/slack-notify
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_TITLE: From Github Actions
+          SLACK_MESSAGE: "Actor: ${{github.actor}}, Event: ${{github.event_name}}"
+          SLACK_COLOR: "#723fc4"
