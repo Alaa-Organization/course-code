@@ -37,3 +37,9 @@ jobs:
         with:
           entrypoint: cat
           args: text.txt
+      - uses: actions/checkout@v4
+      - name: Run a Batch Script
+        uses: docker://node:25-alpine3.22
+        with:
+          entrypoint: ./script.sh
+          args: "Some String"
