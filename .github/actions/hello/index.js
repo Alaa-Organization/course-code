@@ -14,7 +14,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 
 try {
-  throw new Error("Testing core setFailed method" add .Date);
+  throw new Error("Testing core setFailed method");
   core.debug("Debug Message");
   core.warning("Warning Message");
   core.error("Error Message");
