@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/Alaa-Organization/course-code#readme",
   "dependencies": {
+    "@actions/core": "^2.0.2",
+    "@actions/github": "^7.0.0",
     "axios": "^1.13.2",
     "lodash": "^4.17.21",
     "moment": "^2.30.1"

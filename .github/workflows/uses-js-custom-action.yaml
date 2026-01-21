@@ -1,0 +1,20 @@
+# uses keyword: when we need to reference an action
+# https://github.com/actions/hello-world-javascript-action/
+
+name: JS-Simple Custom private Action
+on: [push]
+
+jobs:
+  simple-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Simple JS Action
+        id: greet
+        uses: ./.github/actions/hello
+        with:
+          who_to_greet: Keyhan
+      - name: Log Greeting Time
+        run: echo "${{ steps.greet.outputs.time }}"
+      - name: Log ENV VAR
+        run: $HELLO_TIME
